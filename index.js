@@ -7,7 +7,7 @@ app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 app.get('/',(req,res)=>{
-    res.render('index',)
+    res.render('index',{title:"jjdjd"})
 })
 
 
