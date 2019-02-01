@@ -30,6 +30,10 @@ const InmateSchema = new Schema({
     nextofKinMail:{
         type: String,
         required: true
+    },
+    InmateId: {
+        type: String,
+        required: true
     }
 })
 

@@ -1,27 +1,44 @@
 const router = require('express').Router();
-const User = require('../models/User');
+const Inmate = require('../models/Inmate');
+const Cell = require('../models/Cell');
 var passport = require('passport');
 var csrf = require('csurf');
 
 
-router.get('/login',(req,res)=>{
-    res.render('Login')
-})
-router.get('/register',(req,res)=>{
-    res.render('Register')
-})
 
-router.post('/login',(req,res)=>{
-    const usser = new User({
-        email: req.body.email,
-        password: req.body.password
+function generateInmateId(){
+    Inmate.find({})
+    .then((inmate)=>{
+        if(inmate){
+            console.log(inmate)
+        }
+    })
+}
+
+router.post('/add',(req,res)=>{
+    const usser = new Inmate({
+        name: req.body.name,
+        age: req.body.age,
+        maritalStatus: req.body.maritalStatus,
+        nextofKinName: req.body.nextofKinName,
+        nextofKinAge: req.body.nextofKinAge,
+        nextofKinMail: req.body.nextofKinMail,
+        cell: req.body.cell,
+        InmateId: generateInmateId()
     })
     usser.save()
     .then((result)=>{
-        console.log(`Sucess saving user ${result}`)
+        console.log(`Sucess saving inmate ${result}`)
+        Cell.find({cell_id:req.body.cell})
+        .then((cell)=>{
+            if(cell){
+
+            }
+        })
+
     })
     .catch((err)=>{
-        console.log(`Error saving user ${err}`)
+        console.log(`Error saving inmate ${err}`)
     })
     // console.log(`Your email is ${req.body.email} and your password is ${req.body.password}`)
 })
@@ -69,10 +86,3 @@ router.post('/signin', passport.authenticate('local.signin', {
 
 
 module.exports = router;
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    req.session.oldUrl = req.url;
-    res.redirect('/signin');
-}
