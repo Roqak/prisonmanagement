@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 var expressHbs = require('express-handlebars');
 var bodyParser = require('body-parser')
 const user = require('./routes/user')
+const inmate = require('./routes/inmate')
 
 mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
 .then(()=>{
@@ -37,6 +38,7 @@ app.get('/',(req,res)=>{
     res.render('index',{title:"Home"})
 })
 app.use('/user',user)
+app.use('/inmate',inmate)
 
 app.listen(port,()=>{
     console.log(`running on port ${port}`)

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Inmate = require('../models/Inmate');
 const Cell = require('../models/Cell');
 var passport = require('passport');
-var csrf = require('csurf');
+// var csrf = require('csurf');
 
 
 
@@ -82,7 +82,12 @@ router.post('/signin', passport.authenticate('local.signin', {
         res.send('hello');
     }
 });
+router.get('/add',(req,res)=>{
+    res.render('addInmate')
+})
 
-
+router.get('/manage',(req,res)=>{
+    res.render('manageInmate')
+})
 
 module.exports = router;

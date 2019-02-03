@@ -1,0 +1,56 @@
+<div class="col-md-6 offset-md-3">
+                    <span class="anchor" id="formRegister"></span>
+                    <hr class="mb-5">
+
+                    <!-- register -->
+                    <div class="card card-outline-secondary">
+                        <div class="card-header">
+                            <h3 class="mb-0">Inmate Information</h3>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="/user/register" class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputName">Name</label>
+                                    <input name="name" type="text" class="form-control" id="inputName" placeholder="Full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input name="age" type="text" class="form-control" id="age" placeholder="Age">
+                                </div>
+                                {{!-- <div class="form-group">
+                                    <label for="maritalstatus">Marital Status</label>
+                                    <input name="maritalstatus" type="text" class="form-control" id="maritalstatus" placeholder="Marital Status">
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="maritalstatus2">Marital Status</label>
+                                    <select name="maritalstatus2">
+                                        <option>Single</option>
+                                        <option>Married</option>
+                                        <option>Engaged</option>
+
+
+                                    </select>
+                                </div>
+
+                                <hr class="mb-5">
+                                <div class="card-header">
+                                    <h3 class="mb-0">Next of Kin Information</h3>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nname">Name</label>
+                                    <input name="Nname" type="text" class="form-control" id="Nname" placeholder="Next of Kin Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nage">Next of Kin Age</label>
+                                    <input name="Nage" type="Number" class="form-control" id="Nage" placeholder="Next of Kin Age">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nemail">Next of Kin Email</label>
+                                    <input name="Nemail" type="mail" class="form-control" id="Nemail" placeholder="Next of Kin Email">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success btn-lg float-right">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 var passport = require('passport');
-var csrf = require('csurf');
+// var csrf = require('csurf');
 
 
 router.get('/login',(req,res)=>{
