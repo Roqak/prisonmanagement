@@ -8,7 +8,7 @@ const PrisonSchema = new Schema({
         required: true
     },
     inmate: {
-        type: [String]
+        type: String
     },
     occupied: {
         type: Boolean,

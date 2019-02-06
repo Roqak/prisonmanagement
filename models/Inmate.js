@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const InmateSchema = new Schema({
     cell:{ 
         type:String,
-        required: true
+        required: false
     },
     name:{
         type: String,

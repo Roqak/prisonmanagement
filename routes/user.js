@@ -66,7 +66,9 @@ router.post('/signin', passport.authenticate('local.signin', {
     }
 });
 
-
+router.get('/manage',(req,res)=>{
+    res.render('managecells')
+})
 
 module.exports = router;
 function isLoggedIn(req, res, next) {

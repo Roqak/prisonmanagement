@@ -7,12 +7,13 @@ var passport = require('passport');
 
 
 function generateInmateId(){
-    Inmate.find({})
-    .then((inmate)=>{
-        if(inmate){
-            console.log(inmate)
-        }
-    })
+    // Inmate.find({})
+    // .then((inmate)=>{
+    //     if(inmate){
+    //         console.log(inmate)
+    //     }
+    // })
+    return "1";
 }
 
 router.post('/add',(req,res)=>{
@@ -23,18 +24,18 @@ router.post('/add',(req,res)=>{
         nextofKinName: req.body.nextofKinName,
         nextofKinAge: req.body.nextofKinAge,
         nextofKinMail: req.body.nextofKinMail,
-        cell: req.body.cell,
+        // cell: req.body.cell,
         InmateId: generateInmateId()
     })
     usser.save()
     .then((result)=>{
         console.log(`Sucess saving inmate ${result}`)
-        Cell.find({cell_id:req.body.cell})
-        .then((cell)=>{
-            if(cell){
+        // Cell.find({cell_id:req.body.cell})
+        // .then((cell)=>{
+        //     if(cell){
 
-            }
-        })
+        //     }
+        // })
 
     })
     .catch((err)=>{
