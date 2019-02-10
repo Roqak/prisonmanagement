@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User');
 var passport = require('passport');
 // var csrf = require('csurf');
+const LocalStrategy = require('passport-local').Strategy;
 
 
 router.get('/login',(req,res)=>{
@@ -12,25 +13,23 @@ router.get('/register',(req,res)=>{
 })
 
 router.post('/login',(req,res)=>{
-    const usser = new User({
-        email: req.body.email,
-        password: req.body.password
-    })
-    usser.save()
-    .then((result)=>{
-        console.log(`Sucess saving user ${result}`)
-    })
-    .catch((err)=>{
-        console.log(`Error saving user ${err}`)
-    })
-    // console.log(`Your email is ${req.body.email} and your password is ${req.body.password}`)
+    passport.use(new Strategy(
+        function(username, password, cb) {
+            User.find({email: req.body.email}, function(err, user) {
+              if (err) { return cb(err); }
+              if (!user) { return cb(null, false); }
+              if (user.password != password) { return cb(null, false); }
+              return cb(null, user);
+            });
+          }));
 })
 
 router.post('/register',(req,res)=>{
-    usser.find({email: req.body.email})
-    .then((found)=>{
-        if(found){
+    User.find({email:req.body.email})
+    .then((myuser)=>{
+        if(myuser.email){
             console.log(`user found`)
+            console.log(myuser)
         }else{
             const usser = new User({
                 email: req.body.email,

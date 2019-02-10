@@ -10,7 +10,7 @@ const inmate = require('./routes/inmate')
 let flash = require('connect-flash');
 var passport = ('passport')
 const userr = require('./models/User')
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local').Strategy;
 var session      = require('express-session'); 
 
 mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
@@ -26,8 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(session({
     key: 'user_sid',
     secret: 'goN6DJJC6E287cC77kkdYuNuAyWnz7Q3iZj8',
@@ -37,7 +37,15 @@ app.use(session({
         expires: 600000
     }
 }));
-
+// passport.use(new Strategy(
+//     function(username, password, cb) {
+//         db.users.findByUsername(username, function(err, user) {
+//           if (err) { return cb(err); }
+//           if (!user) { return cb(null, false); }
+//           if (user.password != password) { return cb(null, false); }
+//           return cb(null, user);
+//         });
+//       }));
 // app.use(new LocalStrategy(
 //     function(email, password, done) {
 //       userr.findOne({ email: email }, function (err, user) {
