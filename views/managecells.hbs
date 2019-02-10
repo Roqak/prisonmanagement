@@ -17,9 +17,9 @@
     
 </div>
 <!-- Button to Open the Modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+{{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Open modal
-</button>
+</button> --}}
 
 <!-- The Modal -->
 <div class="modal" id="myModal">
@@ -28,13 +28,17 @@
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Add Cell</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
+        <form action="/user/addcell" method="POST">
+          <label for="cellId">Cell Id:</label>
+          <input type="text" class="form-control" id="cellId">
+          <button type="submit" class="form-control btn btn-primary">Add</button>
+        </form>
       </div>
 
       <!-- Modal footer -->

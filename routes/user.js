@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
-var passport = require('passport');
+const Cell = require('../models/Cell')
 // var csrf = require('csurf');
-const LocalStrategy = require('passport-local').Strategy;
 
 
 router.get('/login',(req,res)=>{
@@ -25,6 +24,9 @@ router.post('/login', passport.authenticate('local.signin', {
         res.redirect('/profile');
     }
 });
+router.post('/login',(req,res)=>{
+    
+})
 
 router.post('/register',(req,res)=>{
     User.find({email:req.body.email})
@@ -53,29 +55,43 @@ router.post('/register',(req,res)=>{
     
 })
 
-router.post('/signin', passport.authenticate('local.signin', {
-    failureRedirect: '/login',
-    failureFlash: true
-}), function (req, res, next) {
-    console.log(req.body.email +" and " + req.body.password);
-    if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
-        req.session.oldUrl = null;
-        res.redirect(oldUrl);
-    } else {
-        res.send('hello');
-    }
-});
+// router.post('/signin', passport.authenticate('local.signin', {
+//     failureRedirect: '/login',
+//     failureFlash: true
+// }), function (req, res, next) {
+//     console.log(req.body.email +" and " + req.body.password);
+//     if (req.session.oldUrl) {
+//         var oldUrl = req.session.oldUrl;
+//         req.session.oldUrl = null;
+//         res.redirect(oldUrl);
+//     } else {
+//         res.send('hello');
+//     }
+// });
 
 router.get('/manage',(req,res)=>{
     res.render('managecells')
 })
+router.post('/addcell',(req,res)=>{
+    Cell.find({cell: req.body.cellId})
+    .then((found)=>{
+        if(found.cell){
+            console.log("Cell Id is already in use")
+        }else{
+            const newcell = new Cell({
+                cell: req.body.cellId
+            })
+            newcell.save()
+            .then((saved)=>{
+                console.log(`Saved ${saved}`)
+            }).catch((err)=>{
+                console.log(`Error: ${err}`)
+            })
+        }
+    })
+    .catch((error)=>{
+        console.log(`Error Finding: ${error}`)
+    })
+})
 
 module.exports = router;
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    req.session.oldUrl = req.url;
-    res.redirect('/signin');
-}

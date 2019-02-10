@@ -12,6 +12,7 @@ var passport = require('passport')
 var validator = require('express-validator');
 //const userr = require('./models/User')
 const LocalStrategy = require('passport-local').Strategy;
+const userr = require('./models/User')
 var session      = require('express-session'); 
 
 mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
