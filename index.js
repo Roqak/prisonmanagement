@@ -8,9 +8,7 @@ var bodyParser = require('body-parser')
 const user = require('./routes/user')
 const inmate = require('./routes/inmate')
 let flash = require('connect-flash');
-var passport = ('passport')
 const userr = require('./models/User')
-const LocalStrategy = require('passport-local').Strategy;
 var session      = require('express-session'); 
 
 mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
