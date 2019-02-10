@@ -8,8 +8,9 @@ var bodyParser = require('body-parser')
 const user = require('./routes/user')
 const inmate = require('./routes/inmate')
 let flash = require('connect-flash');
-var passport = ('passport')
-const userr = require('./models/User')
+var passport = require('passport')
+var validator = require('express-validator');
+//const userr = require('./models/User')
 const LocalStrategy = require('passport-local').Strategy;
 var session      = require('express-session'); 
 
@@ -20,7 +21,7 @@ mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
 .catch((err)=>{
     console.log(`Error connecting to database ${err}`)
 })
-
+require('./config/passport');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -37,6 +38,10 @@ app.use(session({
         expires: 600000
     }
 }));
+
+app.use(validator());
+app.use(flash());
+app.use(passport.initialize());
 // passport.use(new Strategy(
 //     function(username, password, cb) {
 //         db.users.findByUsername(username, function(err, user) {

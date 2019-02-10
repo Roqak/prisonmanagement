@@ -12,17 +12,19 @@ router.get('/register',(req,res)=>{
     res.render('Register')
 })
 
-router.post('/login',(req,res)=>{
-    passport.use(new Strategy(
-        function(username, password, cb) {
-            User.find({email: req.body.email}, function(err, user) {
-              if (err) { return cb(err); }
-              if (!user) { return cb(null, false); }
-              if (user.password != password) { return cb(null, false); }
-              return cb(null, user);
-            });
-          }));
-})
+router.post('/login', passport.authenticate('local.signin', {
+    failureRedirect: '/register',
+    failureFlash: true
+}), function (req, res, next) {
+    if (req.session.oldUrl) {
+        var oldUrl = req.session.oldUrl;
+        req.session.oldUrl = null;
+        res.redirect(oldUrl);
+    } else {
+        console.log("User Logged In");
+        res.redirect('/profile');
+    }
+});
 
 router.post('/register',(req,res)=>{
     User.find({email:req.body.email})
