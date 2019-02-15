@@ -1,9 +1,19 @@
+'use strict'
 const router = require('express').Router();
 const User = require('../models/User');
 const Cell = require('../models/Cell')
+const passport = require('passport')
+const express = require('express')
 // var csrf = require('csurf');
 
+const isLoggedIn = function (req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    req.session.oldUrl = req.url;
+    res.redirect('/user/login')
 
+}
 router.get('/login',(req,res)=>{
     res.render('Login')
 })
@@ -21,12 +31,12 @@ router.post('/login', passport.authenticate('local.signin', {
         res.redirect(oldUrl);
     } else {
         console.log("User Logged In");
-        res.redirect('/profile');
+        res.redirect('/');
     }
 });
-router.post('/login',(req,res)=>{
+// router.post('/login',(req,res)=>{
     
-})
+// })
 
 router.post('/register',(req,res)=>{
     User.find({email:req.body.email})
@@ -69,9 +79,11 @@ router.post('/register',(req,res)=>{
 //     }
 // });
 
-router.get('/manage',(req,res)=>{
+router.get('/manage',isLoggedIn,(req,res)=>{
+    console.log(req.user)
     res.render('managecells')
 })
+
 router.post('/addcell',(req,res)=>{
     Cell.find({cell: req.body.cellId})
     .then((found)=>{
@@ -93,5 +105,7 @@ router.post('/addcell',(req,res)=>{
         console.log(`Error Finding: ${error}`)
     })
 })
+
+
 
 module.exports = router;
