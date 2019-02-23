@@ -3,7 +3,7 @@
         <h1 class="txt primary center">
             Manage Inmates
         </h1>
-        <table class="table stripped">
+        <table class="table stripped responsive">
             <tr>
                 <th>Inmate ID</th>
                 <th>Name</th>
@@ -13,7 +13,100 @@
                 <th>Next of Kin Age</th>
                 <th>Next of Kin Mail</th>
             </tr>
+            <tbody>
+                {{# each inmates}}
+                {{!-- {{# each this}} --}}
+                <tr>
+                    <td>{{this.InmateId}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.age}}</td>
+                     <td></td>
+                    <td>{{this.nextofKinName}}</td>
+                    <td>{{this.nextofKinAge}}</td>
+                    <td>{{this.nextofKinMail}}</td>
+                </tr>
+                {{/each}}
+                {{!-- {{/each}} --}}
+
+            </tbody>
             
         </table>
     </div>
+</div>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Add Inmate
+                    </button>
+                    <!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add Inmate</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form method="post" action="/inmate/add" class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputName">Name</label>
+                                    <input name="name" type="text" class="form-control" id="inputName" placeholder="Full name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input name="age" type="text" class="form-control" id="age" placeholder="Age">
+                                </div>
+                                {{!-- <div class="form-group">
+                                    <label for="maritalstatus">Marital Status</label>
+                                    <input name="maritalstatus" type="text" class="form-control" id="maritalstatus" placeholder="Marital Status">
+                                </div> --}}
+                                <div class="form-group">
+                                    <label for="maritalstatus2">Marital Status</label>
+                                    <select name="maritalStatus">
+                                        <option>Single</option>
+                                        <option>Married</option>
+                                        <option>Engaged</option>
+
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cell">Cell</label>
+                                    <select name="cell" id="cell">
+                                        
+
+
+                                    </select>
+                                </div>
+                                <hr class="mb-5">
+                                <div class="card-header">
+                                    <h3 class="mb-0">Next of Kin Information</h3>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nname">Name</label>
+                                    <input name="nextofKinName" type="text" class="form-control" id="Nname" placeholder="Next of Kin Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nage">Next of Kin Age</label>
+                                    <input name="nextofKinAge" type="Number" class="form-control" id="Nage" placeholder="Next of Kin Age">
+                                </div>
+                                <div class="form-group">
+                                    <label for="Nemail">Next of Kin Email</label>
+                                    <input name="nextofKinMail" type="mail" class="form-control" id="Nemail" placeholder="Next of Kin Email">
+                                </div>
+                                <div class="form-group">
+                                    <button width="100%" type="submit" class="btn btn-success btn-lg float-right">Add</button>
+                                </div>
+                            </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>

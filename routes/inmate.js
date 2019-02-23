@@ -36,6 +36,7 @@ router.post('/add',(req,res)=>{
 
         //     }
         // })
+        res.redirect('/inmate/add')
 
     })
     .catch((err)=>{
@@ -88,7 +89,14 @@ router.get('/add',(req,res)=>{
 })
 
 router.get('/manage',(req,res)=>{
-    res.render('manageInmate')
+    Inmate.find({})
+    .then((result)=>{
+        if(result){
+            console.log(result.length);
+            res.render('manageInmate',{inmates: result})
+
+        }
+    })
 })
 
 module.exports = router;

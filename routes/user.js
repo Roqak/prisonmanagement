@@ -79,7 +79,7 @@ router.post('/register',(req,res)=>{
 //     }
 // });
 
-router.get('/manage',isLoggedIn,(req,res)=>{
+router.get('/manage',(req,res)=>{
     console.log(req.user)
     res.render('managecells')
 })
