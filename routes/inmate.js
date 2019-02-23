@@ -5,6 +5,14 @@ var passport = require('passport');
 // var csrf = require('csurf');
 
 
+const isLoggedIn = function (req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    req.session.oldUrl = req.url;
+    res.redirect('/user/login')
+
+}
 
 function generateInmateId(){
     // Inmate.find({})
@@ -88,7 +96,7 @@ router.get('/add',(req,res)=>{
     res.render('addInmate')
 })
 
-router.get('/manage',(req,res)=>{
+router.get('/manage',isLoggedIn,(req,res)=>{
     Inmate.find({})
     .then((result)=>{
         if(result){
@@ -96,6 +104,16 @@ router.get('/manage',(req,res)=>{
             res.render('manageInmate',{inmates: result})
 
         }
+    })
+})
+router.get('/delete/:id',(req,res)=>{
+    Inmate.findByIdAndDelete({_id:req.params.id})
+    .then((deleted)=>{
+        console.log(deleted)
+        res.redirect('/inmate/manage')
+    })
+    .catch((error)=>{
+        console.log(error)
     })
 })
 
