@@ -4,7 +4,10 @@ const User = require('../models/User');
 const Cell = require('../models/Cell')
 const passport = require('passport')
 const express = require('express')
-// var csrf = require('csurf');
+var csrf = require('csurf');
+
+var csrfProtection = csrf();
+router.use(csrfProtection);
 
 const isLoggedIn = function (req,res,next){
     if(req.isAuthenticated()){
@@ -15,14 +18,15 @@ const isLoggedIn = function (req,res,next){
 
 }
 router.get('/login',(req,res)=>{
-    res.render('Login')
+    res.render('Login',{csrfToken: req.csrfToken()})
 })
 router.get('/register',(req,res)=>{
-    res.render('Register')
+    res.render('Register',{csrfToken: req.csrfToken()})
 })
 
 router.post('/login', passport.authenticate('local.signin', {
-    failureRedirect: '/register',
+    failureRedirect: 'user/register',
+    successRedirect: '/inmate/manage',
     failureFlash: true
 }), function (req, res, next) {
     if (req.session.oldUrl) {
@@ -81,7 +85,7 @@ router.post('/register',(req,res)=>{
 
 router.get('/manage',(req,res)=>{
     console.log(req.user)
-    res.render('managecells')
+    res.render('managecells',{csrfToken: req.csrfToken()})
 })
 
 router.post('/addcell',(req,res)=>{

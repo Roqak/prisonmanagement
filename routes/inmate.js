@@ -2,12 +2,15 @@ const router = require('express').Router();
 const Inmate = require('../models/Inmate');
 const Cell = require('../models/Cell');
 var passport = require('passport');
-// var csrf = require('csurf');
+var csrf = require('csurf');
 
+
+var csrfProtection = csrf();
+router.use(csrfProtection);
 
 const isLoggedIn = function (req,res,next){
     if(req.isAuthenticated()){
-        console.log(req.isAuthenticated())
+        console.log('pass')
         return next()
     }
         req.session.oldUrl = req.url;
@@ -83,6 +86,7 @@ router.post('/register',(req,res)=>{
 
 router.post('/signin', passport.authenticate('local.signin', {
     failureRedirect: '/user/login',
+    successRedirect: '/inmate/manage',
     failureFlash: true
 }), function (req, res, next) {
     console.log(req.body.email +" and " + req.body.password);
@@ -95,15 +99,15 @@ router.post('/signin', passport.authenticate('local.signin', {
     }
 });
 router.get('/add',(req,res)=>{
-    res.render('addInmate')
+    res.render('addInmate',{csrfToken: req.csrfToken()})
 })
 
-router.get('/manage',(req,res)=>{
+router.get('/manage',isLoggedIn,(req,res)=>{
     Inmate.find({})
     .then((result)=>{
         if(result){
             console.log(result.length);
-            res.render('manageInmate',{inmates: result})
+            res.render('manageInmate',{inmates: result, csrfToken: req.csrfToken()})
 
         }
     })

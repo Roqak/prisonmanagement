@@ -14,6 +14,10 @@ var validator = require('express-validator');
 const LocalStrategy = require('passport-local').Strategy;
 const userr = require('./models/User')
 var session      = require('express-session'); 
+let logger = require('morgan')
+
+
+app.use(logger('dev'))
 
 mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
 .then(()=>{
