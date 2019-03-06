@@ -7,10 +7,12 @@ var passport = require('passport');
 
 const isLoggedIn = function (req,res,next){
     if(req.isAuthenticated()){
+        console.log(req.isAuthenticated())
         return next()
     }
-    req.session.oldUrl = req.url;
-    res.redirect('/user/login')
+        req.session.oldUrl = req.url;
+        res.redirect('/user/login')
+    
 
 }
 
@@ -44,7 +46,7 @@ router.post('/add',(req,res)=>{
 
         //     }
         // })
-        res.redirect('/inmate/add')
+        res.redirect('/inmate/manage')
 
     })
     .catch((err)=>{
@@ -80,7 +82,7 @@ router.post('/register',(req,res)=>{
 })
 
 router.post('/signin', passport.authenticate('local.signin', {
-    failureRedirect: '/login',
+    failureRedirect: '/user/login',
     failureFlash: true
 }), function (req, res, next) {
     console.log(req.body.email +" and " + req.body.password);
@@ -96,7 +98,7 @@ router.get('/add',(req,res)=>{
     res.render('addInmate')
 })
 
-router.get('/manage',isLoggedIn,(req,res)=>{
+router.get('/manage',(req,res)=>{
     Inmate.find({})
     .then((result)=>{
         if(result){
