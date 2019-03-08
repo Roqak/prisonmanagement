@@ -1,4 +1,4 @@
-'use strict'
+// 'use strict'
 const router = require('express').Router();
 const User = require('../models/User');
 const Cell = require('../models/Cell')
@@ -18,14 +18,14 @@ const isLoggedIn = function (req,res,next){
 
 }
 router.get('/login',(req,res)=>{
-    res.render('Login',{csrfToken: req.csrfToken()})
+    res.render('Login',{csrfToken: req.csrfToken(),title:'Login'})
 })
 router.get('/register',(req,res)=>{
-    res.render('Register',{csrfToken: req.csrfToken()})
+    res.render('Register',{csrfToken: req.csrfToken(), title:'Register'})
 })
 
 router.post('/login', passport.authenticate('local.signin', {
-    failureRedirect: 'user/register',
+    failureRedirect: '/user/register',
     successRedirect: '/inmate/manage',
     failureFlash: true
 }), function (req, res, next) {
