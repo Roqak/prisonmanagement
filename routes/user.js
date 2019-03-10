@@ -102,13 +102,13 @@ router.post('/addcell',(req,res)=>{
                 console.log(`Saved ${saved}`)
             }).catch((err)=>{
                 console.log(`Error: ${err}`)
-            })
+            });
         }
     })
     .catch((error)=>{
         console.log(`Error Finding: ${error}`)
-    })
-})
+    });
+});
 
 
 
