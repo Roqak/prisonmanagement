@@ -102,7 +102,7 @@ router.get('/add',(req,res)=>{
     res.render('addInmate',{csrfToken: req.csrfToken()})
 })
 
-router.get('/manage',isLoggedIn,(req,res)=>{
+router.get('/manage',(req,res)=>{
     Inmate.find({})
     .then((result)=>{
         if(result){
