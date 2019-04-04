@@ -1,27 +1,90 @@
-<div class="container">
-    <h1 class="text-center text-primary">Cell</h1>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table">
-                <tr>
-                    <th>id</th>
-                    <th>Inmate Name</th>
-                    <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                            Add Cell
-                    </button></th>
-                </tr>
-            </table>
-        </div>
-        
-    </div>
-    
-</div>
-<!-- Button to Open the Modal -->
-{{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Open modal
+{{!-- <div class="alert alert-success">
+  <strong>Success!</strong> Indicates a successful or positive action.
+</div> --}}
+<br>
+{{!-- <button class="btn btn-large btn-primary" data-toggle="confirmation"
+        data-btn-ok-label="Continue" data-btn-ok-class="btn-success"
+        data-btn-ok-icon-class="material-icons" data-btn-ok-icon-content="check"
+        data-btn-cancel-label="Stoooop!" data-btn-cancel-class="btn-danger"
+        data-btn-cancel-icon-class="material-icons" data-btn-cancel-icon-content="close"
+        data-title="Is it ok?" data-content="This might be dangerous">
+  Confirmation
 </button> --}}
 
-<!-- The Modal -->
+<br>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="txt primary center">
+            Manage Inmates
+        </h1>
+        <table class="table stripped responsive">
+            <tr>
+                <th>Cell ID</th>
+                <th>Inmate Name</th>
+                <th>Occupied</th>
+                <th><button style="background-color:green" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                            Add Cell
+                    </button></th>
+                    <th><form class="form-inline active-pink-4">
+  <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Search" aria-label="Search">
+  <i class="fa fa-search" aria-hidden="true"></i>
+</form></th>
+            </tr>
+            <tbody>
+                {{# each inmates}}
+                {{!-- {{# each this}} --}}
+                <tr>
+                    <td>{{this.InmateId}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.age}}</td>
+                    <td><button class="btn btn-small btn-primary" data-toggle="modal" data-target="#{{this.id}}">Edit</button></td>
+                        {{!--  --}}
+                                               <!-- The Modal -->
+                    <div class="modal" id="{{this.id}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title center">{{this.name}}</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <form action="" method="POST">
+                                <div class="form-group">
+                                    <label for="inputName">Name</label>
+                                    <input name="name" type="text" class="form-control" id="inputName" value="{{this.name}}" placeholder="Full name" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName">Next of Kin</label>
+                                    <input name="name" type="text" class="form-control" value="{{this.nextofKinName}}" id="inputt" placeholder="Next of KIn">
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+
+                        </div>
+                    </div>
+                    </div>
+                        {{!--  --}}
+                    <td><a class="btn btn-small btn-danger" href="/inmate/delete/{{this._id}}">delete</a></td>
+                </tr>
+                {{/each}}
+                {{!-- {{/each}} --}}
+
+            </tbody>
+            
+        </table>
+    </div>
+</div>
+
+                    <!-- The Modal -->
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -34,11 +97,20 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <form action="/user/addcell" method="POST">
-          <label for="cellId">Cell Id:</label>
-          <input type="text" class="form-control" id="cellId">
-          <button type="submit" class="form-control btn btn-primary">Add</button>
-        </form>
+        <form method="post" action="/inmate/add" class="form" role="form" autocomplete="off">
+                                <div class="form-group">
+                                    <label for="inputName">Cell ID</label>
+                                    <input name="cell" type="text" class="form-control" id="inputName" placeholder="true" disabled/>
+                                </div>
+                                {{!-- <div class="form-group">
+                                    <label for="maritalstatus">Marital Status</label>
+                                    <input name="maritalstatus" type="text" class="form-control" id="maritalstatus" placeholder="Marital Status">
+                                </div> --}}
+                                 
+                                <div class="form-group">
+                                    <button width="100%" type="submit" class="btn btn-success btn-lg float-right">Add</button>
+                                </div>
+                            </form>
       </div>
 
       <!-- Modal footer -->

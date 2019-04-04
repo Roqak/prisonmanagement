@@ -60,11 +60,11 @@ router.post('/register',(req,res)=>{
             })
             .catch((err)=>{
                 console.log(`Error saving user ${err}`)
-            })
+            });
         }
     })
     .catch((error)=>{
-        console.log(`Error registering user ${error}`)
+        console.log(`Error registering user ${error}`);
     })
     
 })
@@ -83,33 +83,43 @@ router.post('/register',(req,res)=>{
 //     }
 // });
 
-router.get('/manage',isLoggedIn,(req,res)=>{
-    console.log(req.user)
-    res.render('managecells',{csrfToken: req.csrfToken()})
-})
+router.get('/manage',(req,res)=>{
+    console.log(req.user);
+    res.render('managecells',{csrfToken: req.csrfToken(),
+    cell: generateId()})
+});
 
 router.post('/addcell',(req,res)=>{
-    Cell.find({cell: req.body.cellId})
+    Cell.find({}, {}, { sort: { 'created_at' : -1 } })
     .then((found)=>{
         if(found.cell){
-            console.log("Cell Id is already in use")
+            console.log("Cell Id is already in use");
         }else{
             const newcell = new Cell({
                 cell: req.body.cellId
-            })
+            });
             newcell.save()
             .then((saved)=>{
-                console.log(`Saved ${saved}`)
+                console.log(`Saved ${saved}`);
             }).catch((err)=>{
-                console.log(`Error: ${err}`)
+                console.log(`Error: ${err}`);
             });
         }
     })
     .catch((error)=>{
-        console.log(`Error Finding: ${error}`)
+        console.log(`Error Finding: ${error}`);
     });
 });
 
+const generateId = ()=>{
+    Cell.find({})
+    .then((cell)=>{
+        console.log(`${cell}`);
+    })
+    .catch((error)=>{
+        console.log(`${error}`);
+    })
+}
 
 
 module.exports = router;

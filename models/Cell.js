@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const PrisonSchema = new Schema({
     cell:{ 
-        type:String,
+        type: Number,
         required: true
     },
     inmate: {

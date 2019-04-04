@@ -49,11 +49,11 @@ router.post('/add',(req,res)=>{
 
         //     }
         // })
-        res.redirect('/inmate/manage')
+        res.redirect('/inmate/manage');
 
     })
     .catch((err)=>{
-        console.log(`Error saving inmate ${err}`)
+        console.log(`Error saving inmate ${err}`);
     })
     // console.log(`Your email is ${req.body.email} and your password is ${req.body.password}`)
 })
@@ -71,15 +71,15 @@ router.post('/register',(req,res)=>{
             })
             usser.save()
             .then((result)=>{
-                console.log(`Sucess saving user ${result}`)
+                console.log(`Sucess saving user ${result}`);
             })
             .catch((err)=>{
-                console.log(`Error saving user ${err}`)
+                console.log(`Error saving user ${err}`);
             })
         }
     })
     .catch((error)=>{
-        console.log(`Error registering user ${error}`)
+        console.log(`Error registering user ${error}`);
     })
     
 })
@@ -99,7 +99,7 @@ router.post('/signin', passport.authenticate('local.signin', {
     }
 });
 router.get('/add',(req,res)=>{
-    res.render('addInmate',{csrfToken: req.csrfToken()})
+    res.render('addInmate',{csrfToken: req.csrfToken()});
 })
 
 router.get('/manage',(req,res)=>{
@@ -107,20 +107,20 @@ router.get('/manage',(req,res)=>{
     .then((result)=>{
         if(result){
             console.log(result.length);
-            res.render('manageInmate',{inmates: result, csrfToken: req.csrfToken()})
+            res.render('manageInmate',{inmates: result, csrfToken: req.csrfToken()});
 
         }
-    })
-})
+    });
+});
 router.get('/delete/:id',(req,res)=>{
     Inmate.findByIdAndDelete({_id:req.params.id})
     .then((deleted)=>{
-        console.log(deleted)
-        res.redirect('/inmate/manage')
+        console.log(deleted);
+        res.redirect('/inmate/manage');
     })
     .catch((error)=>{
-        console.log(error)
-    })
-})
+        console.log(error);
+    });
+});
 
 module.exports = router;
