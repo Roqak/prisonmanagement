@@ -122,5 +122,15 @@ router.get('/delete/:id',(req,res)=>{
         console.log(error);
     });
 });
+router.post('/updateinmate',(req,res)=>{
+    Inmate.findOneAndUpdate({name: req.body.name},{nextofKinName: req.body.nextofKinName})
+    .then((result)=>{
+        res.redirect('/manage',{csrfToken: req.csrfToken()});
+    })
+    .catch((err)=>{
+        console.log("error")
+    })
+
+})
 
 module.exports = router;

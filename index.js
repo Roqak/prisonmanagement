@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000
+const port = 6500
 var request = require('request')
 const mongoose = require('mongoose')
 var expressHbs = require('express-handlebars');

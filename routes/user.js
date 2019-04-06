@@ -83,7 +83,7 @@ router.post('/register',(req,res)=>{
 //     }
 // });
 
-router.get('/manage',(req,res)=>{
+router.get('/manage',isLoggedIn,(req,res)=>{
     console.log(req.user);
     res.render('managecells',{csrfToken: req.csrfToken(),
     cell: generateId()})
@@ -121,5 +121,17 @@ const generateId = ()=>{
     })
 }
 
+router.get('/addcell/:cellId',(req,res)=>{
+    let newCell = new Cell({
+        cell: req.params.cellId
+    })
+    newCell.save()
+    .then((suceess)=>{
+        res.send("Successfully Registered a NEW Cell")
+    })
+    .catch((err)=>{
+        res.send("Error Sending Data")
+    })
+})
 
 module.exports = router;

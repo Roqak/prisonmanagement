@@ -60,14 +60,16 @@
 
                         <!-- Modal body -->
                         <div class="modal-body">
-                            <form action="" method="POST">
+                            <form action="/inmate/updateinmate" method="POST">
                                 <div class="form-group">
                                     <label for="inputName">Name</label>
                                     <input name="name" type="text" class="form-control" id="inputName" value="{{this.name}}" placeholder="Full name" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Next of Kin</label>
-                                    <input name="name" type="text" class="form-control" value="{{this.nextofKinName}}" id="inputt" placeholder="Next of KIn">
+                                    <input name="nextofKinName" type="text" class="form-control" value="{{this.nextofKinName}}" id="inputt" placeholder="Next of KIn">
+                                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                                    <button type="submit">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -118,7 +120,7 @@
                                     <label for="maritalstatus">Marital Status</label>
                                     <input name="maritalstatus" type="text" class="form-control" id="maritalstatus" placeholder="Marital Status">
                                 </div> --}}
-                                <select class="browser-default custom-select">
+                                <select name="maritalStatus" class="browser-default custom-select">
                                     <option selected>Marital Status</option>
                                     <option value="1">Single</option>
                                     <option value="2">Married</option>
@@ -145,6 +147,7 @@
                                     <input name="nextofKinMail" type="mail" class="form-control" id="Nemail" placeholder="Next of Kin Email">
                                 </div>
                                 <div class="form-group">
+                                    <input type="hidden" name="_csrf" value="{{csrfToken}}">
                                     <button width="100%" type="submit" class="btn btn-success btn-lg float-right">Add</button>
                                 </div>
                             </form>
