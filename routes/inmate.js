@@ -3,6 +3,7 @@ const Inmate = require('../models/Inmate');
 const Cell = require('../models/Cell');
 var passport = require('passport');
 var csrf = require('csurf');
+const faker = require('faker')
 
 
 var csrfProtection = csrf();
@@ -30,6 +31,7 @@ function generateInmateId(){
 }
 
 router.post('/add',(req,res)=>{
+    // let fakeinmate = faker.
     const usser = new Inmate({
         name: req.body.name,
         age: req.body.age,
@@ -82,6 +84,21 @@ router.post('/register',(req,res)=>{
         console.log(`Error registering user ${error}`);
     })
     
+})
+
+router.post('/generate',(req,res)=>{
+    let fake_data = faker.Helpers.createCard();
+    let fake_data2 = faker.Helpers.createCard();
+    const usser = new Inmate({
+        name: fake_data.name,
+        age: fake_data.age,
+        maritalStatus: req.body.maritalStatus,
+        nextofKinName: req.body.nextofKinName,
+        nextofKinAge: req.body.nextofKinAge,
+        nextofKinMail: req.body.nextofKinMail,
+        // cell: req.body.cell,
+        InmateId: generateInmateId()
+    })
 })
 
 router.post('/signin', passport.authenticate('local.signin', {
