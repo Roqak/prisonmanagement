@@ -9,16 +9,7 @@ const faker = require('faker')
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
-const isLoggedIn = function (req,res,next){
-    if(req.isAuthenticated()){
-        console.log('pass')
-        return next()
-    }
-        req.session.oldUrl = req.url;
-        res.redirect('/user/login')
-    
 
-}
 
 function generateInmateId(){
     // Inmate.find({})
@@ -101,20 +92,7 @@ router.post('/generate',(req,res)=>{
     })
 })
 
-router.post('/signin', passport.authenticate('local.signin', {
-    failureRedirect: '/user/login',
-    successRedirect: '/inmate/manage',
-    failureFlash: true
-}), function (req, res, next) {
-    console.log(req.body.email +" and " + req.body.password);
-    if (req.session.oldUrl) {
-        var oldUrl = req.session.oldUrl;
-        req.session.oldUrl = null;
-        res.redirect(oldUrl);
-    } else {
-        res.send('hello');
-    }
-});
+
 router.get('/add',(req,res)=>{
     res.render('addInmate',{csrfToken: req.csrfToken()});
 })
@@ -149,5 +127,28 @@ router.post('/updateinmate',(req,res)=>{
     })
 
 })
+router.post('/signin', passport.authenticate('local.signin', {
+    failureRedirect: '/user/login',
+    successRedirect: '/inmate/manage',
+    failureFlash: true
+}), function (req, res, next) {
+    console.log(req.body.email +" and " + req.body.password);
+    if (req.session.oldUrl) {
+        var oldUrl = req.session.oldUrl;
+        req.session.oldUrl = null;
+        res.redirect(oldUrl);
+    } else {
+        res.send('hello');
+    }
+});
+const isLoggedIn = function (req,res,next){
+    if(req.isAuthenticated()){
+        console.log('pass')
+        return next()
+    }
+        req.session.oldUrl = req.url;
+        res.redirect('/user/login')
+    
 
+}
 module.exports = router;

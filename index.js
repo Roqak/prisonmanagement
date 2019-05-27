@@ -19,7 +19,7 @@ let logger = require('morgan')
 
 app.use(logger('dev'))
 
-mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison")
+mongoose.connect("mongodb://akin:akinkunmi1@ds137550.mlab.com:37550/prison",{ useNewUrlParser: true })
 .then(()=>{
     console.log("successfully connected to the db")
 })
