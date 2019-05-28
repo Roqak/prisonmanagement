@@ -9,7 +9,16 @@ const faker = require('faker')
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
+const isLoggedIn = function (req,res,next){
+    if(req.isAuthenticated()){
+        console.log('pass')
+        return next()
+    }
+        req.session.oldUrl = req.url;
+        res.redirect('/user/login')
+    
 
+}
 
 function generateInmateId(){
     // Inmate.find({})
@@ -31,7 +40,9 @@ router.post('/add',(req,res)=>{
         nextofKinAge: req.body.nextofKinAge,
         nextofKinMail: req.body.nextofKinMail,
         // cell: req.body.cell,
-        InmateId: generateInmateId()
+        InmateId: generateInmateId(),
+        genotype: req.body.genotype,
+        bloodGroup: req.body.blood
     })
     usser.save()
     .then((result)=>{
@@ -141,14 +152,8 @@ router.post('/signin', passport.authenticate('local.signin', {
         res.send('hello');
     }
 });
-const isLoggedIn = function (req,res,next){
-    if(req.isAuthenticated()){
-        console.log('pass')
-        return next()
-    }
-        req.session.oldUrl = req.url;
-        res.redirect('/user/login')
-    
+router.get("*",(req,res)=>{
+    res.send("Page Not Found")
+})
 
-}
 module.exports = router;

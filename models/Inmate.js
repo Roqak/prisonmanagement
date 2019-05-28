@@ -34,6 +34,14 @@ const InmateSchema = new Schema({
     InmateId: {
         type: String,
         required: true
+    },
+    genotype: {
+        type: String,
+        required: false
+    },
+    bloodGroup: {
+        type: String,
+        required: false
     }
 })
 
